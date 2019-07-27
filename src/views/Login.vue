@@ -70,7 +70,7 @@
               password: this.password
             }
             await this.$store.dispatch('loginUser', user);
-            // console.log(user)
+            await this.$store.dispatch('getUser');
           }
           this.$router.push('/posts/')
         } catch (e) {

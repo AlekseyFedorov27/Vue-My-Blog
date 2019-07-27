@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="color_inp "  v-if="$store.state.user">
+      <div class="color_inp "  v-if="userID">
         <v-spacer></v-spacer>
         <textarea name="text" cols="50" class="textarea" v-model="newComment"></textarea>
         
@@ -33,7 +33,7 @@ import inputMess from '@/components/inputMessage'
 
   export default {
     components: { inputMess },
-    props: ['postID'],
+    props: ['postID', 'userID'],
     data () {
       return {
         newComment: '',

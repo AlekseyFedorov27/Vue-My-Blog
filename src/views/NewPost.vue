@@ -38,6 +38,9 @@
         color="deep-purple"
         label="Post title"
         type="email"
+        :counter="30"
+        :rules="titleRules"
+        required
       ></v-text-field>
 
       <v-textarea
@@ -47,6 +50,9 @@
         color="deep-purple"
         label="Post"
         rows="1"
+        :counter="2000"
+        :rules="postRules"
+        required
       ></v-textarea>
 
     </v-form>
@@ -66,6 +72,14 @@ import { fromNumber } from 'long';
       post: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts',
       postTitle: 'My weekend',
       form: false,
+      postRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 2000) || 'Name must be less than 1000 characters'
+      ],
+      titleRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 30) || 'Name must be less than 30 characters'
+      ],
     }),
     methods: {
        onPickFile(){
@@ -91,6 +105,7 @@ import { fromNumber } from 'long';
           name: this.$store.state.user[0].info.name,
           userID: this.$store.getters.userID,
           image: this.image,
+          stars: 0,
           time: new Date().toLocaleString("ru", {
             month: 'numeric',  day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'
           })

@@ -51,10 +51,13 @@ export default {
       }
     },
     getUid(state){
+      if ( firebase.auth().currentUser ) {
       const user = firebase.auth().currentUser
       state.uid = user.uid;
       localStorage.setItem ('user', user)
       return user ? user.uid : null
+      }
+
     },
     initAuth ({commit, state}) {
       let user = localStorage.getItem ('user')

@@ -35,6 +35,13 @@ export default {
     ClearCommentPost(state) {
       state.CommentPost = null
     },
+    addStar ({state, getters}, userID) {
+
+ return
+    },
+    removeStar ({state, getters}, postID) {
+      return
+    }
   },
   actions: {
     async addNewPost({commit}, payload){
@@ -59,7 +66,7 @@ export default {
           return key
         })
         .then (key => {
-          const filename = payload.image.name
+          const filename = payload.image.name 
           const ext = filename.slice(filename.lastIndexOf('.'))
 
           return firebase.storage().ref('/posts/' + key + '.' + ext ).put(payload.image).then(fileData => {
@@ -79,9 +86,18 @@ export default {
         const posts = (await firebase.database().ref(`posts`).once('value')).val();
         const postsArr = [];
         for (let key in posts) {
+          
           postsArr.push( {...posts[key], id: key} )
+
         }
-        // console.log(posts)
+        //запись звед в массив постов
+        for ( let i = 0; i < postsArr.length; i++ ) {
+          postsArr[i].Stars = [];
+          for (let key in postsArr[i].stars) {
+            postsArr[i].Stars.push( {...postsArr[i].stars[key], id: key} )
+          }
+        }
+
         commit ('loadPosts', postsArr)
       } catch (e) {
         commit('setError', e)
@@ -94,10 +110,10 @@ export default {
 
         const postStars = [];
         for (let key in post.stars) {
-        console.log(postStars)
+        // console.log(postStars)
         postStars.push( {...post[key], id: key} )
         }
-        console.log(postStars)
+        // console.log(postStars)
 
         commit ('loadPost', {...post, postStars})
       } catch (e) {
@@ -122,14 +138,48 @@ export default {
         throw e
       }
     },
-    async addStar({commit, getters}, idPost){
+    async addStar({commit, getters, dispatch}, idPost){
       try{
         let userID = getters.userID
-        const post = (await firebase.database().ref(`/posts/${idPost}/stars/${userID}`).update({userID}))
+        const post = (await firebase.database().ref(`/posts/${idPost}/stars/${userID}`).update({userID}));
+        commit ('addStar', idPost);
+        dispatch('loadPost', idPost);
+      } catch (e) {
+        commit('setError', userID)
+        throw e
+      }
+    },
+    async removeStar({commit, getters, dispatch}, idPost) {
+      try{
+        let userID = getters.userID
+        const post = (await firebase.database().ref(`/posts/${idPost}/stars/${userID}`).remove());
+        // console.log(post)
+        commit ('addStar', idPost);
+        dispatch('loadPost', idPost);
       } catch (e) {
         commit('setError', e)
         throw e
       }
+    },
+    toggleStar ({commit, getters, dispatch}, idPost) {
+
+      let findeID = getters.loadPost.postStars.findIndex(i => i.id == getters.userID);
+
+      if ( firebase.auth().currentUser ) {
+
+        if ( findeID!=-1 ) {
+          dispatch('removeStar', idPost);// запись в базу
+          commit('removeStar', findeID);
+          dispatch('loadPost', idPost)
+        } else {
+           dispatch('addStar', idPost);// запись в базу
+           commit('addStar', findeID);
+           dispatch('loadPost', idPost)
+          }
+      } else {
+        return
+      }
+      
     },
     async addCommentPost({commit, getters}, payload){
       try{

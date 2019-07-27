@@ -17,13 +17,13 @@ Vue.config.productionTip = false
 
   // Your web app's Firebase configuration
   firebase.initializeApp({
-    apiKey: "AIzaSyANowKJcqbMpqHLlr3Ya5lUl_4lOWn5MS4",
-    authDomain: "chat-82aa3.firebaseapp.com",
-    databaseURL: "https://chat-82aa3.firebaseio.com",
-    projectId: "chat-82aa3",
-    storageBucket: "chat-82aa3.appspot.com",
-    messagingSenderId: "47896472115",
-    appId: "1:47896472115:web:8f909e105b6f80a9"
+    apiKey: "xxxxxxxxxxxxx4",
+    authDomain: "cxxxxxxxxxxxcom",
+    databaseURL: "https://xxxxxxxxxxcom",
+    projectId: "chxxxxxxxxxxxx3",
+    storageBucket: "cxxxxxxxxxxxm",
+    messagingSenderId: "4x5",
+    appId: "xxxxxxxxxxxxxxa9"
   });
   // Initialize Firebase
  

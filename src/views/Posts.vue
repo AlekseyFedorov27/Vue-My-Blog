@@ -16,6 +16,9 @@
               <v-flex xs12 md4 align-end flexbox>
                 <span class="headline title_color">{{post.title}}</span>
               </v-flex>
+
+
+
             </v-layout>
           </v-container>
         </v-img>
@@ -24,6 +27,7 @@
           <div>
             <span class="grey--text ">{{post.time}}</span><br>
 
+
             <span >{{post.post.substring(0,100)}}...</span>
           </div>
         </v-card-title>
@@ -31,30 +35,54 @@
           <v-btn flat color="orange" :to="'/post/'+post.id">Read more</v-btn>
           <v-btn flat color="green">Autor: {{post.name}}</v-btn>
         </v-card-actions>
-        
+
+        <v-spacer></v-spacer>
+        <v-btn icon >
+          <v-icon v-bind:class="{ active: post.Stars.findIndex(i => i.id == userID) == 0 }">star</v-icon>
+          <p v-if="post.Stars" >{{post.Stars.length}}</p>
+        </v-btn>
+
       </v-card>
 
-      </div> 
+      </div>
 
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import firebase from 'firebase/app'
+
 export default {
   created () {
     this.$store.dispatch('loadPosts');
-     this.$store.dispatch('getUser', this.users);///?????????????????????????
+
   },
   computed: {
     loadPosts() {
       return this.$store.getters.loadPosts
     },
+    userID() {
+      if (firebase.auth().currentUser) {
+        return this.$store.getters.userID
+      } else {
+        return false
+      }
+       
+    },
+
   },
+  // methods: {
+  //   toggleStar (idPost) {
+  //     this.$store.dispatch('toggleStar', idPost);
+  //   }
+  // }
 }
 </script>
 <style lang="scss" scoped>
-
+.active{
+  color: red!important;
+}
 .title_color{
   color: rgb(255, 255, 255);
   background-color: rgb(107, 107, 107);

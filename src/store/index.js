@@ -11,7 +11,7 @@ export default new Vuex.Store({
     error: null,
     userArr: [],
     messages: [],
-    // user: null
+    user: null
   },
   mutations: {
     getUsers(state, payload) {
@@ -90,12 +90,6 @@ export default new Vuex.Store({
       return state.messages
     },
     userID( state ) {
-      // if (state.user !== null){
-      //   return state.user[0].id
-      // }
-      // else {
-      //   return 'null'
-      // }
       return state.user[0].id
     },
     users: s => s.userArr,

@@ -50,6 +50,7 @@ const router = new Router({
     {
       path: '/editpost/:id',
       name: 'editpost',
+      meta: { auth: true },//защита роутов
       component: () => import('./views/EditPost.vue'),
     },
   ],

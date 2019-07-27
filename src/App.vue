@@ -11,10 +11,10 @@
           <v-spacer></v-spacer>
           <v-toolbar-items class="hidden-sm-and-down">
 
-            <v-btn flat to="/new_post" v-if="$store.state.user">Add post<v-icon >add_photo_alternate</v-icon></v-btn>
+            <v-btn flat to="/new_post" >Add post<v-icon >add_photo_alternate</v-icon></v-btn>
             <v-btn flat to="/posts">Posts<v-icon>collections</v-icon></v-btn>
 
-            <v-btn flat to="/" v-if="$store.state.user">List<v-icon >group</v-icon></v-btn>
+            <v-btn flat to="/" >List<v-icon >group</v-icon></v-btn>
 
               <v-btn flat
               @click="logaut"
